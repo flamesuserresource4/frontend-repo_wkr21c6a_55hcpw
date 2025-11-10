@@ -1,26 +1,36 @@
-import { useState } from 'react'
+import { useRef } from 'react'
+import Hero from './components/Hero'
+import PredictionForm from './components/PredictionForm'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const formRef = useRef(null)
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-slate-950">
+      <header className="fixed top-0 left-0 right-0 z-20 bg-slate-900/70 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <a href="/" className="text-white font-semibold">FraudSense</a>
+          <nav className="hidden sm:flex items-center gap-6 text-slate-200">
+            <a href="#predict" className="hover:text-white">Predict</a>
+            <a href="/test" className="hover:text-white">Status</a>
+            <a href="https://en.wikipedia.org/wiki/Credit_card_fraud" target="_blank" className="hover:text-white">Learn</a>
+          </nav>
         </div>
-      </div>
+      </header>
+
+      <main className="pt-14">
+        <Hero onCTAClick={scrollToForm} />
+        <div ref={formRef}>
+          <PredictionForm />
+        </div>
+        <footer className="py-10 text-center text-slate-400 bg-slate-900">
+          <p>Built for demo purposes. Not financial advice.</p>
+        </footer>
+      </main>
     </div>
   )
 }
